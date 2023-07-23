@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+    <table id="patientstable">
+        <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>fname</th>
+            <th>lname</th>
+            <th>DOB</th>
+            <th>gender</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <?php
+        require_once("Connection.php");
+        echo "<br>";
+        $sql = "SELECT * FROM Patients";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['id']}</td>
+                        <td>{$row['username']}</td>
+                        <td>{$row['fname']}</td>
+                        <td>{$row['lname']}</td>
+                        <td>{$row['DOB']}</td>
+                        <td>{$row['gender']}</td>
+                        <td>{$row['email']}</td>
+                        <td>{$row['phone']}</td>
+                        <td><a href='/drugDispenser/edit1.php?id={$row['id']}'>Edit</a></td>
+                        <td><a href='/phptest/Project_Folder/ProjectForms/deletepatients.php?id={$row['id']}'>Delete</a></td>
+                      </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='10'>No results</td></tr>";
+        }
+        $conn->close();
+        ?>
+    </table>
+    <script type='text/javascript' src="pagination.js"></script>
+</body>
+</html>
